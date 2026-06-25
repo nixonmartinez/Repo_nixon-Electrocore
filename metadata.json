@@ -1,0 +1,6 @@
+{
+  "name": "ElectroCore",
+  "description": "Industrial electrical e-commerce platform with inventory management, CRM customer lookup, and custom delivery coverage verification.",
+  "requestFramePermissions": ["geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
