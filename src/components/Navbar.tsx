@@ -120,7 +120,7 @@ export default function Navbar({
         <div className="flex items-center gap-1.5 sm:gap-3 lg:gap-4 shrink-0">
           
           {/* Technical Search Bar - compact to give space */}
-          <div className="hidden xl:flex items-center bg-surface-container-low border border-border-subtle rounded-md px-2.5 py-1.5 w-44 xl:w-56 focus-within:border-oxford-blue transition-colors">
+          <div className="hidden lg:flex items-center bg-surface-container-low border border-border-subtle rounded-md px-2 py-1 lg:w-36 xl:w-56 focus-within:border-oxford-blue transition-colors">
             <Search className="text-industrial-gray mr-2 shrink-0" size={14} />
             <input
               type="text"
