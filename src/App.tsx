@@ -14,6 +14,7 @@ import PaymentModal from './components/PaymentModal';
 
 import { Product, CartItem, CRMClient, DeliveryDetails as DeliveryDetailsType, Language } from './types';
 import { INITIAL_PRODUCTS, INITIAL_CRM_CLIENTS, DICTIONARY } from './data';
+import companyLogo from '../assets/logo/electrocable.jpg';
 
 export default function App() {
   // Global Configurations State
@@ -149,6 +150,37 @@ export default function App() {
     setDeliveryDetails((prev) => ({ ...prev, ...updated }));
   };
 
+  const handlePaymentSuccess = (transactionId: string) => {
+    const totalAmount = cartItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0) * 1.08 + deliveryDetails.calculatedFee;
+    const newClient: CRMClient = {
+      id: `client-${Date.now()}`,
+      name: deliveryDetails.attentionTo || 'Ingeniero de Obra',
+      company: deliveryDetails.projectName || 'Proyecto General',
+      email: `${(deliveryDetails.attentionTo || 'contacto').toLowerCase().replace(/\s+/g, '')}@proyecto.com.do`,
+      phone: '+1 809 555 0122',
+      lastInquiryDate: new Date().toISOString().split('T')[0],
+      status: 'converted',
+      avatar: (deliveryDetails.attentionTo || 'IN').split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase(),
+      recentInquiry_es: `Adquisición Directa: Compra de partes eléctricas en el sitio web. Destino: ${deliveryDetails.address}, ${deliveryDetails.city}.`,
+      recentInquiry_en: `Direct Procurement: Electrical parts purchased online. Destination: ${deliveryDetails.address}, ${deliveryDetails.city}.`,
+      recentActivity_es: `Pago aprobado. ID de Rastreo LTL: ${transactionId}. Carga en preparación para entrega.`,
+      recentActivity_en: `Payment approved. LTL Tracking ID: ${transactionId}. Cargo preparing for shipping.`,
+      orderHistory: [
+        {
+          id: transactionId,
+          date: new Date().toISOString().split('T')[0],
+          items_es: cartItems.map(item => `${item.quantity}x ${item.product.name_es}`).join(', '),
+          items_en: cartItems.map(item => `${item.quantity}x ${item.product.name_en}`).join(', '),
+          total: totalAmount,
+          status_es: 'En Preparación',
+          status_en: 'Preparing'
+        }
+      ]
+    };
+
+    setClients((prev) => [newClient, ...prev]);
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-surface text-text-main antialiased font-sans">
       
@@ -228,6 +260,7 @@ export default function App() {
               currentLanguage={currentLanguage}
               cartItems={cartItems}
               deliveryDetails={deliveryDetails}
+              clients={clients}
               onUpdateDetails={handleUpdateDetails}
               onProceedToPayment={() => setIsPaymentModalOpen(true)}
               onLeave={() => setCurrentScreen('catalog')}
@@ -244,13 +277,9 @@ export default function App() {
           <div className="space-y-4">
             <div className="flex items-center gap-2.5">
               <img 
-                src="/20.jpeg" 
-                alt="ElectroCore Logo" 
+                src={companyLogo} 
+                alt="ElectroCable Logo" 
                 className="h-8 w-8 object-contain rounded bg-white p-0.5"
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                }}
               />
               <span className="font-sans font-extrabold tracking-tight text-xl text-white">
                 ELECTRO<span className="text-electric-yellow font-black">CORE</span>
@@ -377,6 +406,7 @@ export default function App() {
         deliveryDetails={deliveryDetails}
         currentLanguage={currentLanguage}
         onClearCart={handleClearCart}
+        onPaymentSuccess={handlePaymentSuccess}
       />
 
     </div>

@@ -11,6 +11,7 @@ interface PaymentModalProps {
   deliveryDetails: DeliveryDetails;
   currentLanguage: Language;
   onClearCart: () => void;
+  onPaymentSuccess?: (id: string) => void;
 }
 
 export default function PaymentModal({
@@ -20,10 +21,12 @@ export default function PaymentModal({
   deliveryDetails,
   currentLanguage,
   onClearCart,
+  onPaymentSuccess,
 }: PaymentModalProps) {
   const t = DICTIONARY[currentLanguage];
 
   const [paymentDone, setPaymentDone] = useState(false);
+  const [transactionId, setTransactionId] = useState('');
   const [cardNumber, setCardNumber] = useState('');
   const [expiry, setExpiry] = useState('');
   const [cvv, setCvv] = useState('');
@@ -37,12 +40,18 @@ export default function PaymentModal({
     e.preventDefault();
     if (!cardNumber || !expiry || !cvv || !holderName) return;
 
+    const generatedId = `TX-${500000 + Math.floor(Math.random() * 500000)}`;
+    setTransactionId(generatedId);
+    if (onPaymentSuccess) {
+      onPaymentSuccess(generatedId);
+    }
     setPaymentDone(true);
   };
 
   const handleFinish = () => {
     onClearCart();
     setPaymentDone(false);
+    setTransactionId('');
     setCardNumber('');
     setExpiry('');
     setCvv('');
@@ -100,8 +109,8 @@ export default function PaymentModal({
                   </h4>
                   <p className="text-xs text-industrial-gray leading-relaxed max-w-sm mx-auto">
                     {currentLanguage === 'es'
-                      ? 'El pago se procesó de forma segura. El despacho y envío de carga pesada LTL ha sido programado.'
-                      : 'Payment processed successfully. LTL heavy freight shipment dispatch has been queued.'}
+                      ? 'El pago se procesó de forma segura. Use el Ticket ID de abajo en la pestaña de "Verificar Entrega" para simular el rastreo del despacho LTL en tiempo real.'
+                      : 'Payment processed successfully. Copy the Ticket ID below and use it under the "Verify Delivery" tab to simulate the LTL cargo tracking in real-time.'}
                   </p>
                 </div>
 
@@ -109,7 +118,8 @@ export default function PaymentModal({
                   <div className="font-sans font-bold text-oxford-blue border-b border-border-subtle/50 pb-1 mb-2 uppercase">
                     {currentLanguage === 'es' ? 'Ticket de Transacción' : 'Transaction Ticket'}
                   </div>
-                  <div>ID: TX-{(500000 + Math.floor(Math.random() * 500000))}</div>
+                  <div>ID: {transactionId}</div>
+
                   <div>{currentLanguage === 'es' ? 'PROYECTO' : 'PROJECT'}: {deliveryDetails.projectName.toUpperCase() || 'STANDARD'}</div>
                   <div>{currentLanguage === 'es' ? 'ENTREGA' : 'DELIVERY'}: {deliveryDetails.address.toUpperCase()}, {deliveryDetails.city.toUpperCase()}</div>
                   <div className="font-bold text-oxford-blue pt-1.5 border-t border-border-subtle/30 flex justify-between">

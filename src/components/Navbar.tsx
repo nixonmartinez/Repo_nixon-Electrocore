@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Search, Languages, ShoppingCart, User, Menu, ShieldAlert, X } from 'lucide-react';
 import { Language } from '../types';
 import { DICTIONARY } from '../data';
+import companyLogo from '../../assets/logo/electrocable.jpg';
 
 interface NavbarProps {
   currentLanguage: Language;
@@ -46,13 +47,9 @@ export default function Navbar({
             className="flex items-center gap-2 text-left"
           >
             <img 
-              src="/20.jpeg" 
-              alt="ElectroCore Logo" 
+              src={companyLogo} 
+              alt="ElectroCable Logo" 
               className="h-10 w-10 object-contain rounded-md"
-              referrerPolicy="no-referrer"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-              }}
             />
             <div className="flex flex-col">
               <span className="font-sans font-extrabold tracking-tight text-2xl text-oxford-blue">
