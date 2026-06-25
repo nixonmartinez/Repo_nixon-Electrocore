@@ -11,6 +11,8 @@ import DeliveryVerification from './components/DeliveryVerification';
 import CartSlideOver from './components/CartSlideOver';
 import QuoteModal from './components/QuoteModal';
 import PaymentModal from './components/PaymentModal';
+import BOMUpload from './components/BOMUpload';
+import ComplianceHub from './components/ComplianceHub';
 
 import { Product, CartItem, CRMClient, DeliveryDetails as DeliveryDetailsType, Language } from './types';
 import { INITIAL_PRODUCTS, INITIAL_CRM_CLIENTS, DICTIONARY } from './data';
@@ -19,7 +21,7 @@ import companyLogo from '../assets/logo/electrocable.jpg';
 export default function App() {
   // Global Configurations State
   const [currentLanguage, setCurrentLanguage] = useState<Language>('es');
-  const [currentScreen, setCurrentScreen] = useState<'catalog' | 'details' | 'admin' | 'delivery'>('catalog');
+  const [currentScreen, setCurrentScreen] = useState<'catalog' | 'details' | 'admin' | 'delivery' | 'bom' | 'compliance'>('catalog');
   
   // Interactive Data Lists State
   const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
@@ -267,6 +269,25 @@ export default function App() {
             />
           </div>
         )}
+
+        {currentScreen === 'bom' && (
+          <div className="animate-fadeIn">
+            <BOMUpload
+              currentLanguage={currentLanguage}
+              productsList={products}
+              onAddToCart={handleAddToCart}
+              onOpenCart={() => setIsCartOpen(true)}
+            />
+          </div>
+        )}
+
+        {currentScreen === 'compliance' && (
+          <div className="animate-fadeIn">
+            <ComplianceHub
+              currentLanguage={currentLanguage}
+            />
+          </div>
+        )}
       </main>
 
       {/* Structured Industrial Brand Footer */}
@@ -331,22 +352,29 @@ export default function App() {
             </h4>
             <ul className="space-y-2.5 text-xs text-white/75 font-semibold">
               <li>
-                <button onClick={() => setCurrentScreen('admin')} className="hover:text-electric-yellow transition-colors">
+                <button onClick={() => setCurrentScreen('admin')} className="hover:text-electric-yellow transition-colors text-left">
                   {t.admin} Dashboard
                 </button>
               </li>
               <li>
-                <button onClick={() => setCurrentScreen('delivery')} className="hover:text-electric-yellow transition-colors">
+                <button onClick={() => setCurrentScreen('delivery')} className="hover:text-electric-yellow transition-colors text-left">
                   {currentLanguage === 'es' ? 'Cobertura de Entrega LTL' : 'LTL Freight Coverage'}
                 </button>
               </li>
               <li>
-                <button onClick={handleTriggerBulkQuote} className="hover:text-electric-yellow transition-colors">
-                  {t.requestQuoteTitle}
+                <button onClick={() => setCurrentScreen('compliance')} className="hover:text-electric-yellow transition-colors text-left">
+                  {currentLanguage === 'es' ? 'Homologaciones EDE' : 'EDE Compliance'}
                 </button>
               </li>
               <li>
-                <span className="text-white/40 block">System Hub API (Offline)</span>
+                <button onClick={() => setCurrentScreen('bom')} className="hover:text-electric-yellow transition-colors text-left">
+                  {currentLanguage === 'es' ? 'Carga Rápida de Planos (BOM)' : 'Upload BOM'}
+                </button>
+              </li>
+              <li>
+                <button onClick={handleTriggerBulkQuote} className="hover:text-electric-yellow transition-colors text-left">
+                  {t.requestQuoteTitle}
+                </button>
               </li>
             </ul>
           </div>

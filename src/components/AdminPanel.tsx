@@ -134,13 +134,13 @@ export default function AdminPanel({
             <h2 className="text-oxford-blue font-sans font-bold text-lg">{t.mgmtSub}</h2>
           </div>
 
-          <nav className="space-y-1">
+          <nav className="flex flex-row overflow-x-auto lg:flex-col gap-2 lg:gap-1 lg:space-y-1 pb-2 lg:pb-0 scrollbar-none">
             <button
               onClick={() => { setActiveTab('dashboard'); }}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-sm font-sans text-xs font-bold uppercase tracking-wider transition-colors ${
+              className={`w-auto shrink-0 lg:w-full lg:shrink-0 flex items-center gap-3 px-3 py-2.5 rounded-sm font-sans text-xs font-bold uppercase tracking-wider transition-colors border-b-2 lg:border-b-0 lg:border-l-4 ${
                 activeTab === 'dashboard'
-                  ? 'bg-surface-container-low text-oxford-blue border-l-4 border-oxford-blue pl-2'
-                  : 'text-industrial-gray hover:bg-surface-container-low hover:text-oxford-blue'
+                  ? 'bg-surface-container-low text-oxford-blue border-oxford-blue pl-3 lg:pl-2 font-extrabold'
+                  : 'text-industrial-gray border-transparent hover:bg-surface-container-low hover:text-oxford-blue'
               }`}
             >
               <BarChart3 size={16} />
@@ -148,10 +148,10 @@ export default function AdminPanel({
             </button>
             <button
               onClick={() => { setActiveTab('inventory'); }}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-sm font-sans text-xs font-bold uppercase tracking-wider transition-colors ${
+              className={`w-auto shrink-0 lg:w-full lg:shrink-0 flex items-center gap-3 px-3 py-2.5 rounded-sm font-sans text-xs font-bold uppercase tracking-wider transition-colors border-b-2 lg:border-b-0 lg:border-l-4 ${
                 activeTab === 'inventory'
-                  ? 'bg-surface-container-low text-oxford-blue border-l-4 border-oxford-blue pl-2'
-                  : 'text-industrial-gray hover:bg-surface-container-low hover:text-oxford-blue'
+                  ? 'bg-surface-container-low text-oxford-blue border-oxford-blue pl-3 lg:pl-2 font-extrabold'
+                  : 'text-industrial-gray border-transparent hover:bg-surface-container-low hover:text-oxford-blue'
               }`}
             >
               <Layers size={16} />
@@ -159,10 +159,10 @@ export default function AdminPanel({
             </button>
             <button
               onClick={() => { setActiveTab('prospects'); }}
-              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-sm font-sans text-xs font-bold uppercase tracking-wider transition-colors ${
+              className={`w-auto shrink-0 lg:w-full lg:shrink-0 flex items-center gap-3 px-3 py-2.5 rounded-sm font-sans text-xs font-bold uppercase tracking-wider transition-colors border-b-2 lg:border-b-0 lg:border-l-4 ${
                 activeTab === 'prospects'
-                  ? 'bg-surface-container-low text-oxford-blue border-l-4 border-oxford-blue pl-2'
-                  : 'text-industrial-gray hover:bg-surface-container-low hover:text-oxford-blue'
+                  ? 'bg-surface-container-low text-oxford-blue border-oxford-blue pl-3 lg:pl-2 font-extrabold'
+                  : 'text-industrial-gray border-transparent hover:bg-surface-container-low hover:text-oxford-blue'
               }`}
             >
               <Users size={16} />

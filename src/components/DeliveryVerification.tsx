@@ -266,27 +266,27 @@ export default function DeliveryVerification({
         </div>
 
         {/* Sub-tab view buttons */}
-        <div className="flex border-b border-border-subtle">
+        <div className="flex flex-col sm:flex-row border-b border-border-subtle gap-1">
           <button
             onClick={() => setActiveSubTab('checkout')}
-            className={`py-3.5 px-6 text-xs font-extrabold uppercase tracking-wider border-b-2 transition-all ${
+            className={`py-3.5 px-6 text-xs font-extrabold uppercase tracking-wider border-b-2 text-left sm:text-center transition-all ${
               activeSubTab === 'checkout'
                 ? 'border-oxford-blue text-oxford-blue font-black'
-                : 'border-transparent text-industrial-gray hover:text-oxford-blue'
+                : 'border-transparent text-industrial-gray hover:text-oxford-blue hover:bg-surface-container-low/40'
             }`}
           >
             {currentLanguage === 'es' ? '1. Configurar Envío y Flete' : '1. Configure Shipping & Freight'}
           </button>
           <button
             onClick={() => setActiveSubTab('tracking')}
-            className={`py-3.5 px-6 text-xs font-extrabold uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
+            className={`py-3.5 px-6 text-xs font-extrabold uppercase tracking-wider border-b-2 text-left sm:text-center transition-all flex items-center justify-between sm:justify-start gap-2 ${
               activeSubTab === 'tracking'
                 ? 'border-oxford-blue text-oxford-blue font-black'
-                : 'border-transparent text-industrial-gray hover:text-oxford-blue'
+                : 'border-transparent text-industrial-gray hover:text-oxford-blue hover:bg-surface-container-low/40'
             }`}
           >
             <span>{currentLanguage === 'es' ? '2. Rastrear Despacho LTL' : '2. Track LTL Dispatch'}</span>
-            <span className="bg-electric-yellow text-oxford-blue text-[9px] px-1.5 py-0.5 rounded font-black uppercase tracking-widest animate-pulse">En Vivo</span>
+            <span className="bg-electric-yellow text-oxford-blue text-[9px] px-1.5 py-0.5 rounded font-black uppercase tracking-widest animate-pulse shrink-0">En Vivo</span>
           </button>
         </div>
 
@@ -516,41 +516,41 @@ export default function DeliveryVerification({
                 </svg>
 
                 {/* Cover status bar HUD */}
-                <div className="absolute bottom-3 left-3 right-12 bg-white/95 border border-border-subtle p-3 rounded-md z-10 flex items-center justify-between">
+                <div className="absolute bottom-3 left-3 right-12 bg-white/95 border border-border-subtle p-3 rounded-md z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                   {activeSubTab === 'checkout' ? (
                     <>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2 w-full sm:w-auto">
                         {deliveryDetails.isVerified ? (
-                          <Truck size={18} className="text-green-600" />
+                          <Truck size={18} className="text-green-600 shrink-0" />
                         ) : (
-                          <XCircle size={18} className="text-red-600" />
+                          <XCircle size={18} className="text-red-600 shrink-0" />
                         )}
                         <div>
                           <span className="text-[9px] font-bold uppercase block text-industrial-gray">
                             {currentLanguage === 'es' ? 'COBERTURA LOGÍSTICA DE CARGA' : 'HEAVY LOGISTICS STATUS'}
                           </span>
-                          <p className="text-xs font-bold text-oxford-blue">
+                          <p className="text-xs font-bold text-oxford-blue leading-tight">
                             {currentLanguage === 'es' ? deliveryDetails.zoneName_es : deliveryDetails.zoneName_en}
                           </p>
                         </div>
                       </div>
                       
                       {deliveryDetails.isVerified && (
-                        <div className="text-right">
+                        <div className="text-left sm:text-right w-full sm:w-auto pl-7 sm:pl-0">
                           <span className="text-[9px] font-bold uppercase block text-industrial-gray">FREIGHT FEE</span>
                           <p className="text-xs font-mono font-black text-oxford-blue">{t.currency}{deliveryDetails.calculatedFee.toFixed(2)}</p>
                         </div>
                       )}
                     </>
                   ) : (
-                    <div className="w-full flex items-center justify-between">
-                      <div className="flex items-center gap-2.5">
-                        <Truck size={18} className="text-oxford-blue animate-bounce" />
+                    <div className="w-full flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                      <div className="flex items-center gap-2.5 w-full sm:w-auto">
+                        <Truck size={18} className="text-oxford-blue animate-bounce shrink-0" />
                         <div>
                           <span className="text-[9px] font-bold uppercase block text-industrial-gray">
                             {currentLanguage === 'es' ? 'UBICACIÓN DE DESPACHO LTL' : 'LTL FREIGHT TRANSIT'}
                           </span>
-                          <p className="text-xs font-bold text-oxford-blue">
+                          <p className="text-xs font-bold text-oxford-blue leading-tight">
                             {trackedOrder 
                               ? (currentLanguage === 'es' 
                                 ? `Ruta: Haina ➔ ${trackedOrder.address}` 
@@ -561,7 +561,7 @@ export default function DeliveryVerification({
                       </div>
                       
                       {trackedOrder && (
-                        <div className="text-right font-mono">
+                        <div className="text-left sm:text-right font-mono w-full sm:w-auto pl-7 sm:pl-0">
                           <span className="text-[9px] font-bold uppercase block text-industrial-gray">PROGRESO</span>
                           <p className="text-xs font-black text-oxford-blue">{simulationProgress}%</p>
                         </div>
@@ -614,7 +614,7 @@ export default function DeliveryVerification({
                     />
                   </div>
 
-                  <div className="grid grid-cols-3 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
                       <label className="block text-xs font-bold text-industrial-gray mb-1">{t.city}</label>
                       <input

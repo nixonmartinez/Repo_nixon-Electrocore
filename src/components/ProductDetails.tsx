@@ -154,7 +154,7 @@ export default function ProductDetails({
                 <h3 className="font-sans font-bold text-xs uppercase tracking-wider text-oxford-blue mb-3">
                   {t.techSpecs}
                 </h3>
-                <div className="border border-border-subtle rounded-md overflow-hidden font-sans text-xs">
+                <div className="border border-border-subtle rounded-md overflow-hidden overflow-x-auto font-sans text-xs">
                   <table className="w-full text-left border-collapse">
                     <thead>
                       <tr className="bg-surface-container-low border-b border-border-subtle">
