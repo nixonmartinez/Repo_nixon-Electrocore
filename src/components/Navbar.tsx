@@ -39,23 +39,23 @@ export default function Navbar({
 
   return (
     <header className="bg-white border-b border-border-subtle fixed top-0 w-full z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-20 flex justify-between items-center gap-2 sm:gap-4">
         
         {/* 1. Logo (Izquierda - Fijo) */}
         <button 
           onClick={() => onScreenChange('catalog')}
-          className="flex items-center gap-2 text-left shrink-0"
+          className="flex items-center gap-1.5 sm:gap-2 text-left shrink-0"
         >
           <img 
             src={companyLogo} 
             alt="ElectroCable Logo" 
-            className="h-10 w-10 object-contain rounded-md"
+            className="h-9 w-9 sm:h-10 sm:w-10 object-contain rounded-md"
           />
           <div className="flex flex-col">
-            <span className="font-sans font-extrabold tracking-tight text-xl xl:text-2xl text-oxford-blue">
+            <span className="font-sans font-extrabold tracking-tight text-lg sm:text-xl xl:text-2xl text-oxford-blue">
               ELECTRO<span className="text-electric-yellow font-black">CORE</span>
             </span>
-            <span className="text-[8px] xl:text-[9px] uppercase tracking-[0.2em] text-industrial-gray font-semibold -mt-1">
+            <span className="hidden sm:block text-[8px] xl:text-[9px] uppercase tracking-[0.2em] text-industrial-gray font-semibold -mt-1">
               International Group
             </span>
           </div>
@@ -117,7 +117,7 @@ export default function Navbar({
         </nav>
 
         {/* 3. Acciones del Sistema (Derecha - Fijo) */}
-        <div className="flex items-center gap-3 lg:gap-4 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-3 lg:gap-4 shrink-0">
           
           {/* Technical Search Bar - compact to give space */}
           <div className="hidden xl:flex items-center bg-surface-container-low border border-border-subtle rounded-md px-2.5 py-1.5 w-44 xl:w-56 focus-within:border-oxford-blue transition-colors">
@@ -134,7 +134,7 @@ export default function Navbar({
           {/* Language Selector */}
           <button
             onClick={handleLangToggle}
-            className="flex items-center gap-1 text-industrial-gray hover:text-oxford-blue transition-colors py-1 px-1.5 rounded-md hover:bg-surface-container-low"
+            className="hidden lg:flex items-center gap-1 text-industrial-gray hover:text-oxford-blue transition-colors py-1 px-1.5 rounded-md hover:bg-surface-container-low"
             title={currentLanguage === 'es' ? 'Switch to English' : 'Cambiar a Español'}
           >
             <Languages size={16} />
@@ -161,7 +161,7 @@ export default function Navbar({
           {/* Admin profile shortcut */}
           <button
             onClick={() => onScreenChange('admin')}
-            className="p-2 text-industrial-gray hover:text-oxford-blue hover:bg-surface-container-low rounded-md transition-colors"
+            className="hidden lg:block p-2 text-industrial-gray hover:text-oxford-blue hover:bg-surface-container-low rounded-md transition-colors"
             title="System Administration & CRM"
           >
             <User size={18} />
@@ -259,6 +259,20 @@ export default function Navbar({
               <span>{t.admin} (CRM)</span>
               <span className="bg-electric-yellow text-oxford-blue text-[10px] px-1.5 py-0.5 rounded font-extrabold font-mono">PRO</span>
             </button>
+
+            {/* Mobile Language Selector */}
+            <div className="border-t border-border-subtle/50 pt-4 mt-2 flex items-center justify-between">
+              <span className="text-xs font-bold text-oxford-blue flex items-center gap-1.5 uppercase tracking-wider">
+                <Languages size={15} />
+                {currentLanguage === 'es' ? 'Idioma:' : 'Language:'}
+              </span>
+              <button
+                onClick={handleLangToggle}
+                className="flex items-center gap-1.5 text-oxford-blue bg-surface-container-low py-1.5 px-3 rounded-md hover:bg-surface-container-high transition-colors"
+              >
+                <span className="font-mono text-xs font-black uppercase">{currentLanguage === 'es' ? 'Español (ES)' : 'English (EN)'}</span>
+              </button>
+            </div>
           </div>
         </div>
       )}
